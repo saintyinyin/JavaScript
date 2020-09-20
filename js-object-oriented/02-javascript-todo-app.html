@@ -2,10 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>JavaScript Tutorial - Working with JSON</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Javascript Todo App</h1>
+            
+        <div  class="row mt-4">
+            <div class="col-md-8">
+                <ul id="todo-list">
+                    <li>Sample to do list item</li>
+                </ul>
+            </div>
+            <div class="col-4">
+                <form>
+                    <input type="text" id="todoTitle" placeholder="Todo title...">
+                    <button onclick="newTodo()" class="addBtn btn btn-sm btn-primary form-control mt-3">Add</span>
+                </form>
+            </div>
+        </div>
+        
+    </div>
 </body>
+<script>
+    var json_data = [
+        {
+            "UserId": 1,
+            "id": 1,
+            "title": "delectus aut autem",
+            "completed": false
+        },
+        {
+            "UserId": 1,
+            "id": 2,
+            "title": "qus ut nam facilis et officia qui",
+            "completed": false
+        },
+        {
+            "UserId": 1,
+            "id": 3,
+            "title": "fugiat veniam minus",
+            "completed": false
+        },
+        {
+            "UserId": 1,
+            "id": 4,
+            "title": "et porro tempora",
+            "completed": true
+        },
+        {
+            "UserId": 1,
+            "id": 5,
+            "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
+            "completed": false
+        }
+    ];
+
+    var myList = document.getElementById("todo-list");
+
+    json_data.forEach(element => {
+        newTodo(element.title);
+    });
+
+    registerEventListeners();
+
+    function registerEventListeners() {
+        var closeButton = document.getElementsByClassName("delete");
+        for(var i = 0; i < closeButton.length; i++) {
+            closeButton[i].addEventListener('click', deleteTodo, false);
+        };
+    };
+
+    function deleteTodo() {
+        var li = this.parentElement;
+        myList.removeChild(li);
+    };
+
+    function newTodo(todoTitle) {
+        if (!todoTitle) {
+            todoTitle = document.getElementById("todoTitle").value;
+        }
+        var listItem = document.createElement("li");
+        listItem.appendChild(
+            document.createTextNode(todoTitle)
+        );
+        var deleteLink = document.createElement("a");
+        deleteLink.href = "#";
+        deleteLink.className = "btn btn-sm btn-danger m-1 delete";
+        deleteLink.appendChild(
+            document.createTextNode("Delete")
+        );
+        listItem.appendChild(deleteLink);
+        myList.appendChild(listItem);
+        registerEventListeners();
+    };
+</script>
 </html>
